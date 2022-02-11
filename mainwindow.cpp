@@ -118,15 +118,15 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     int figureOnPos;
     figureOnPos = getFigureOnPos(event->x(),event->y());
     //if()
-
-    if(m_pFigures[figureOnPos]->getColor() == BLACK){
     if(figureOnPos != 999){
-    if(m_pFigures[figureOnPos]->isThere == true)activeFigure = figureOnPos;
+        if(m_pFigures[figureOnPos]->getColor() == BLACK){
+            if(figureOnPos != 999){
+                if(m_pFigures[figureOnPos]->isThere == true)activeFigure = figureOnPos;
+        }
     }
-
     if(activeFigure != 999){
-    posBeforeMove.setX(m_pFigures[activeFigure]->getPosX());
-    posBeforeMove.setY(m_pFigures[activeFigure]->getPosY());
+    m_pFigures[activeFigure]->posBeforeMove.setX(m_pFigures[activeFigure]->getPosX());
+    m_pFigures[activeFigure]->posBeforeMove.setY(m_pFigures[activeFigure]->getPosY());
     }
     //qDebug() << posBeforeMove.x();
     //qDebug() << posBeforeMove.y();
@@ -151,25 +151,25 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     if(event->x() > 0 && event->y() > 0 && event->x() < WINDOW_WIDTH && event->y() < WINDOW_HEIGHT ){
         qDebug() << "normal";
         bool possibleMove = false;
-        qDebug() << "fef"<< m_pFigures[activeFigure]->possibleMovesCurrently.size();
+        qDebug() << "fef" << m_pFigures[activeFigure]->possibleMovesCurrently.size();
         for(int i = 0;i<m_pFigures[activeFigure]->possibleMovesCurrently.size();i++){
-            qDebug() << posBeforeMove.x()+m_pFigures[activeFigure]->possibleMovesCurrently[i].x();
-            qDebug() << f.x();
-            qDebug() << i;
+            //qDebug() << m_pFigures[activeFigure]->posBeforeMove.x()+m_pFigures[activeFigure]->possibleMovesCurrently[i].x();
+            //qDebug() << f.x();
+            //qDebug() << i;
 
-            if(posBeforeMove.x()+m_pFigures[activeFigure]->possibleMovesCurrently[i].x() == f.x() && posBeforeMove.y() +m_pFigures[activeFigure]->possibleMovesCurrently[i].y() == f.y()){
+            if(m_pFigures[activeFigure]->posBeforeMove.x()+m_pFigures[activeFigure]->possibleMovesCurrently[i].x() == f.x() && m_pFigures[activeFigure]->posBeforeMove.y() +m_pFigures[activeFigure]->possibleMovesCurrently[i].y() == f.y()){
                 possibleMove = true;
 
                 m_pFigures[activeFigure]->setPos(f.x(),f.y());
             }
 
         }
-        if(possibleMove == false)m_pFigures[activeFigure]->setPos(posBeforeMove.x(),posBeforeMove.y());
+        if(possibleMove == false)m_pFigures[activeFigure]->setPos(m_pFigures[activeFigure]->posBeforeMove.x(),m_pFigures[activeFigure]->posBeforeMove.y());
 
 
     }
 
-    else m_pFigures[activeFigure]->setPos(posBeforeMove.x(),posBeforeMove.y());
+    else m_pFigures[activeFigure]->setPos(m_pFigures[activeFigure]->posBeforeMove.x(),m_pFigures[activeFigure]->posBeforeMove.y());
 
 
 
@@ -190,7 +190,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
         }
 
 
-    if(posBeforeMove.x() != m_pFigures[activeFigure]->getPosX() || posBeforeMove.y() != m_pFigures[activeFigure]->getPosY()){
+    if(m_pFigures[activeFigure]->posBeforeMove.x() != m_pFigures[activeFigure]->getPosX() || m_pFigures[activeFigure]->posBeforeMove.y() != m_pFigures[activeFigure]->getPosY()){
         if(captured == false){
         musicPlayer->setMedia(QUrl("qrc:/sounds/move.mp3"));
         musicPlayer->play();
@@ -274,19 +274,20 @@ int MainWindow::getFigureOnPos(float pos_x, float pos_y)
 
 void MainWindow::refreshCurrentlyPossibleMoves()
 {
+
     for(int i = 0;i<m_amountFigures;i++){
         m_pFigures[i]->possibleMovesCurrently.clear();
         for(int j = 0;j<m_pFigures[i]->possibleMoves.size();j++){
             QPoint f;
 
-            if(m_pFigures[i]->getPosX()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->getPosY()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->getPosX()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->getPosY()+m_pFigures[i]->possibleMoves[j].y() < 876){
-                f.setX(m_pFigures[i]->getPosX()+m_pFigures[i]->possibleMoves[j].x());
-                f.setY(m_pFigures[i]->getPosX()+m_pFigures[i]->possibleMoves[j].y());
+            if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                 m_pFigures[i]->possibleMovesCurrently.append(f);
+                }
             }
         }
+
     }
 
-
-}
 

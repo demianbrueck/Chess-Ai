@@ -56,7 +56,6 @@ private:
     QPoint getField(float,float);
     int getFigureOnPos(float,float);
     int activeFigure;
-    QPoint posBeforeMove;
     QMediaPlayer * musicPlayer;
     bool captured;
     bool playingColor;

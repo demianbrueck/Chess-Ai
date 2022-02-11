@@ -85,6 +85,7 @@ public:
     QVector<QPoint> possibleMoves;
     QVector<QPoint> possibleMovesCurrently;
     bool getColor();
+    QPoint posBeforeMove;
 private:
     bool color;
     int posX;
