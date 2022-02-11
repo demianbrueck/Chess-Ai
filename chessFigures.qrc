@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/chessFigures">
+        <file>Chess_bdt60.png</file>
+        <file>Chess_blt60.png</file>
+        <file>Chess_kdt60.png</file>
+        <file>Chess_klt60.png</file>
+        <file>Chess_ndt60.png</file>
+        <file>Chess_nlt60.png</file>
+        <file>Chess_pdt60.png</file>
+        <file>Chess_plt60.png</file>
+        <file>Chess_qdt60.png</file>
+        <file>Chess_qlt60.png</file>
+        <file>Chess_rdt60.png</file>
+        <file>Chess_rlt60.png</file>
+        <file>Chess_kdt45.svg</file>
+        <file>Chess_pdt45.svg</file>
+        <file>Chess_klt45.svg</file>
+        <file>Chess_plt45.svg</file>
+        <file>Chess_ndt45.svg</file>
+        <file>Chess_nlt45.svg</file>
+        <file>Chess_bdt45.svg</file>
+        <file>Chess_blt45.svg</file>
+        <file>Chess_rdt45.svg</file>
+        <file>Chess_rlt45.svg</file>
+        <file>Chess_qdt45.svg</file>
+        <file>Chess_qlt45.svg</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>capture.mp3</file>
+        <file>move.mp3</file>
+    </qresource>
+</RCC>
