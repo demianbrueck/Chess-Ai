@@ -86,11 +86,13 @@ public:
     QVector<QPoint> possibleMovesCurrently;
     bool getColor();
     QPoint posBeforeMove;
+    int getType();
+    bool firstMove;
 private:
     bool color;
     int posX;
     int posY;
-
+    int type;
 };
 
 #endif // FIGURES_H

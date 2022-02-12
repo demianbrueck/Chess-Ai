@@ -58,9 +58,9 @@ private:
     int activeFigure;
     QMediaPlayer * musicPlayer;
     bool captured;
-    bool playingColor;
     void refreshCurrentlyPossibleMoves();
-
+    bool colorTurn;
+    void getAiMove();
 
 };
 #endif // MAINWINDOW_H
