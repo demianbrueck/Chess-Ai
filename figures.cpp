@@ -763,21 +763,21 @@ void Figures::setType(FIGURE_NAMES type)
        QPoint f;
        for(int i = 1;i<8;i++){
            f.setX(0);
-           f.setY(-125*i);
-           possibleMoves.append(f);
-           }
-       for(int i = 1;i<8;i++){
-           f.setX(-125*i);
-           f.setY(0);
-           possibleMoves.append(f);
-           }
-       for(int i = 1;i<8;i++){
-           f.setX(0);
            f.setY(125*i);
            possibleMoves.append(f);
            }
        for(int i = 1;i<8;i++){
            f.setX(125*i);
+           f.setY(0);
+           possibleMoves.append(f);
+           }
+       for(int i = 1;i<8;i++){
+           f.setX(0);
+           f.setY(-125*i);
+           possibleMoves.append(f);
+           }
+       for(int i = 1;i<8;i++){
+           f.setX(-125*i);
            f.setY(0);
            possibleMoves.append(f);
            }

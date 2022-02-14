@@ -62,5 +62,6 @@ private:
     bool colorTurn;
     void getAiMove();
 
+
 };
 #endif // MAINWINDOW_H
