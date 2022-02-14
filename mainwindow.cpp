@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_pSysTickTimer->start(1);
     musicPlayer = new QMediaPlayer;
     colorTurn = WHITE;
-    m_pFigures[20]->setPos(125,500);
+
 }
 
 MainWindow::~MainWindow()
@@ -114,7 +114,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "press";
+    //qDebug() << "press";
     int figureOnPos;
     figureOnPos = getFigureOnPos(event->x(),event->y());
     //if()
@@ -138,7 +138,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
 
     captured = false;
-    qDebug() << "released";
+    //qDebug() << "released";
     if(activeFigure != 999) m_pFigures[activeFigure]->isMoving = false;
     //qDebug() << event->x();
     //qDebug() << event->y();
@@ -282,18 +282,30 @@ int MainWindow::getFigureOnPos(float pos_x, float pos_y)
 
 void MainWindow::refreshCurrentlyPossibleMoves()
 {
-
+    //qDebug() << m_amountFigures;
     for(int i = 0;i<m_amountFigures;i++){
+        //qDebug() << m_pFigures[i]->getType();
         m_pFigures[i]->possibleMovesCurrently.clear();
         QPoint f;
                 //move rules for knights
                 if(m_pFigures[i]->getType() >= 20 && m_pFigures[i]->getType() < 24){
                     for(int j = 0;j<m_pFigures[i]->possibleMoves.size();j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        //qDebug() << m_pFigures[i]->possibleMoves[j];
+                    bool figureInfront = false;
+                    for(int g = 0;g<m_amountFigures;g++){
+                        if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() == m_pFigures[i]->getColor()){
 
-                    if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                            figureInfront = true;
+                        }
+                    }
+                    //qDebug() <<"m"<< figureInfront;
+                    if(figureInfront == false){
+
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
+                            }
                         }
                     }
                 }
@@ -306,7 +318,7 @@ void MainWindow::refreshCurrentlyPossibleMoves()
                         if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == 125){
                             bool figureInfront = false;
                             for(int g = 0;g<m_amountFigures;g++){
-                              if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y()) figureInfront = true;
+                              if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->isThere == true) figureInfront = true;
                             }
                           if(figureInfront == false){
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
@@ -318,7 +330,7 @@ void MainWindow::refreshCurrentlyPossibleMoves()
 
                                 bool figureInfront = false;
                                 for(int g = 0;g<m_amountFigures;g++){
-                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y()) figureInfront = true;
+                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->isThere == true) figureInfront = true;
                                 }
                                 if(figureInfront == false){
                                     f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
@@ -326,12 +338,11 @@ void MainWindow::refreshCurrentlyPossibleMoves()
                                     m_pFigures[i]->possibleMovesCurrently.append(f);
                                 }
                           }
-                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
-
                             if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == 250 && m_pFigures[i]->firstMove == false){
                                 bool figureInfront = false;
                                 for(int g = 0;g<m_amountFigures;g++){
-                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y()) figureInfront = true;
+                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->isThere == true) figureInfront = true;
+                                  //qDebug() << "f"<<figureInfront;
                                 }
                               if(figureInfront == false){
                                 f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
@@ -340,11 +351,12 @@ void MainWindow::refreshCurrentlyPossibleMoves()
                               }
                             }
                             if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == -250 && m_pFigures[i]->firstMove == false){
-
+                                    //qDebug() << "fef";
                                     bool figureInfront = false;
                                     for(int g = 0;g<m_amountFigures;g++){
-                                      if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y()) figureInfront = true;
+                                      if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->isThere == true) figureInfront = true;
                                     }
+                                    //qDebug() <<"m"<< figureInfront;
                                     if(figureInfront == false){
                                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
@@ -352,23 +364,298 @@ void MainWindow::refreshCurrentlyPossibleMoves()
                                     }
                               }
 
-                        else{
+
+                            if(m_pFigures[i]->possibleMoves[j].x() == 125 && m_pFigures[i]->possibleMoves[j].y() == 125){
+                                bool figureInfront = false;
+                                for(int g = 0;g<m_amountFigures;g++){
+                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() != m_pFigures[i]->getColor() && m_pFigures[g]->isThere == true) figureInfront = true;
+                                  //qDebug() << "f"<<figureInfront;
+                                }
+                              if(figureInfront == true){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                              }
+                            }
+                            if(m_pFigures[i]->possibleMoves[j].x() == -125 && m_pFigures[i]->possibleMoves[j].y() == 125){
+                                    //qDebug() << "fef";
+                                    bool figureInfront = false;
+                                    for(int g = 0;g<m_amountFigures;g++){
+                                      if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() != m_pFigures[i]->getColor() && m_pFigures[g]->isThere == true) figureInfront = true;
+                                    }
+                                    //qDebug() <<"m"<< figureInfront;
+                                    if(figureInfront == true){
+                                        f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                        f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                        m_pFigures[i]->possibleMovesCurrently.append(f);
+                                    }
+                              }
+
+                            if(m_pFigures[i]->possibleMoves[j].x() == 125 && m_pFigures[i]->possibleMoves[j].y() == -125){
+                                bool figureInfront = false;
+                                for(int g = 0;g<m_amountFigures;g++){
+                                  if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() != m_pFigures[i]->getColor() && m_pFigures[g]->isThere == true) figureInfront = true;
+                                  //qDebug() << "f"<<figureInfront;
+                                }
+                              if(figureInfront == true){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                              }
+                            }
+                            if(m_pFigures[i]->possibleMoves[j].x() == -125 && m_pFigures[i]->possibleMoves[j].y() == -125){
+                                    //qDebug() << "fef";
+                                    bool figureInfront = false;
+                                    for(int g = 0;g<m_amountFigures;g++){
+                                      if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() != m_pFigures[i]->getColor() && m_pFigures[g]->isThere == true) figureInfront = true;
+                                    }
+                                    //qDebug() <<"m"<< figureInfront;
+                                    if(figureInfront == true){
+                                        f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                        f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                        m_pFigures[i]->possibleMovesCurrently.append(f);
+                                    }
+                              }
+                            //qDebug() << "memerfef";
+
+
+
+
+
+                        /*else{
 
                             for(int k = 0;k<m_amountFigures;k++){
                                 if(m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() == m_pFigures[k]->getPosX() && m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y()== m_pFigures[k]->getPosY() && m_pFigures[i]->getColor() != m_pFigures[k]->getColor() && m_pFigures[k]->isThere == true){
-                                    qDebug() << "else";
+                                    //qDebug() << "else";
                                     f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                                     f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                                     m_pFigures[i]->possibleMovesCurrently.append(f);
                                 }
                             }
+                        }*/
+                            }
                         }
                 }
-            }
-        }
+                    //kings move rules
+                    if(m_pFigures[i]->getType() == 30 || m_pFigures[i]->getType() == 31){
+
+                        for(int j = 0;j<m_pFigures[i]->possibleMoves.size();j++){
+                            if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                            //qDebug() << m_pFigures[i]->possibleMoves[j];
+                        bool figureInfront = false;
+                        for(int g = 0;g<m_amountFigures;g++){
+                            if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() == m_pFigures[i]->getColor()){
+
+                                figureInfront = true;
+                            }
+                        }
+                        //qDebug() <<"m"<< figureInfront;
+                        if(figureInfront == false){
+
+                            f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                            f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                            m_pFigures[i]->possibleMovesCurrently.append(f);
+                                }
+                            }
+                        }
+                    }
+                //rook move rules
+                if(m_pFigures[i]->getType() > 15 && m_pFigures[i]->getType() < 20){
+                    for(int j = 0;j<7;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 7;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 7;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 7;j<14;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 14;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 14;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 14;j<21;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 21;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 21;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 21;j<28;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 28;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 28;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                }
+
+                }
+                //bishop move rules
+                if(m_pFigures[i]->getType() > 23 && m_pFigures[i]->getType() < 28){
+                    for(int j = 0;j<7;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 7;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 7;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 7;j<14;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 14;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 14;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 14;j<21;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 21;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 21;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                    }
+                    for(int j = 21;j<28;j++){
+                        if(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() > -1 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() > -1 && m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x() < 876 && m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y() < 876){
+                        for(int k = 0;k<m_amountFigures;k++){
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() != m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i){
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                j = 28;
+                                }
+                            }
+                            if(m_pFigures[k]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[k]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[k]->getColor() == m_pFigures[i]->getColor() && m_pFigures[k]->isThere == true){
+                                if(k!=i)j = 28;
+                            }
+                            else{
+                                f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
+                                f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
+                                m_pFigures[i]->possibleMovesCurrently.append(f);
+                                qDebug() << "mem";
+                            }
+                        }
+                    }
+                }
+
+                }
+
     }
 }
-}
+
+
 void MainWindow::getAiMove()
 {
 
