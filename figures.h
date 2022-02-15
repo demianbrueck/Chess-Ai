@@ -88,11 +88,13 @@ public:
     QPoint posBeforeMove;
     int getType();
     bool firstMove;
+    int getValue();
 private:
     bool color;
     int posX;
     int posY;
     int type;
+    int value;
 };
 
 #endif // FIGURES_H

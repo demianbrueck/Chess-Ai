@@ -52,6 +52,7 @@ private:
     float chessFieldHeight;
     bool blackFieldColor;
     Figures * m_pFigures[32];
+    Figures * m_pFiguresCopy[32];
     int m_amountFigures;
     QPoint getField(float,float);
     int getFigureOnPos(float,float);
@@ -61,6 +62,10 @@ private:
     void refreshCurrentlyPossibleMoves();
     bool colorTurn;
     void getAiMove();
+    int depth;
+    int highestAiValue;
+    int bestAiMoveFigure;
+    QPoint bestAiMove;
 
 
 };

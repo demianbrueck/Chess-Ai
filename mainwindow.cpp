@@ -15,18 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
     for(int f=0;f<32;f++){
         m_amountFigures++;
         m_pFigures[f] = new Figures(0,0,(Figures::FIGURE_NAMES)f);
+        m_pFiguresCopy[f] = new Figures(0,0,(Figures::FIGURE_NAMES)f);
+
     }
     m_pSysTickTimer = new QTimer(this);
     connect(m_pSysTickTimer, &QTimer::timeout, this, &MainWindow::sysTickTimer);
     activeFigure = 999;
     m_pSysTickTimer->start(1);
     musicPlayer = new QMediaPlayer;
-    colorTurn = WHITE;
+    colorTurn = BLACK;
     for(int i = 0;i < m_amountFigures;i++){
         m_pFigures[i]->posBeforeMove.setX(m_pFigures[i]->getPosX());
         m_pFigures[i]->posBeforeMove.setY(m_pFigures[i]->getPosY());
         m_pFigures[i]->firstMove = false;
     }
+    depth = 3;
 }
 
 MainWindow::~MainWindow()
@@ -173,6 +176,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 if(colorTurn == BLACK) colorTurn = WHITE;
                 else colorTurn = BLACK;
                 //qDebug() << "move";
+                getAiMove();
             }
 
         }
@@ -218,8 +222,10 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     }
     //activeFigure = 999;
     if(activeFigure != 999)if(m_pFigures[activeFigure]->isMoving == false) activeFigure = 999;
-    if(colorTurn == WHITE) getAiMove();
-    qDebug() << m_pFigures[19]->possibleMovesCurrently.size();
+
+    //qDebug() << m_pFigures[19]->possibleMovesCurrently.size();
+    //getAiMove();
+
     update();
 
 }
@@ -982,8 +988,100 @@ void MainWindow::refreshCurrentlyPossibleMoves()
 
 void MainWindow::getAiMove()
 {
+    qDebug() << "me";
+    for(int t = 0;t<m_amountFigures;t++){
+    m_pFiguresCopy[t] = m_pFigures[t];
+
+    }
+    int aiValue = 0;
+    //unsigned long f = 0;
+    highestAiValue = 999;
+
+        for(int i1 = 0;i1<m_amountFigures;i1++){
+            if(m_pFigures[i1]->getColor() == WHITE){
+                for(int j1 = 0;j1<m_pFigures[i1]->possibleMovesCurrently.size();j1++){
+
+                    for(int i2 = 0;i2<m_amountFigures;i2++){
+                        if(m_pFigures[i2]->getColor() == BLACK){
+
+                            for(int j2 = 0;j2<m_pFigures[i2]->possibleMovesCurrently.size();j2++){
+
+                                //for(int i3 = 0;i3<m_amountFigures;i3++){
+                                    //if(m_pFigures[i3]->getColor() == WHITE){
+
+                                        //for(int j3 = 0;j3<m_pFigures[i3]->possibleMovesCurrently.size();j3++){
+
+                                            //for(int i4 = 0;i4<m_amountFigures;i4++){
+                                                //if(m_pFigures[i4]->getColor() == BLACK){
+
+                                                    //for(int j4 = 0;j4<m_pFigures[i4]->possibleMovesCurrently.size();i4++){
+                                                        m_pFigures[i1]->setPos(m_pFigures[i1]->possibleMovesCurrently[j1].x(),m_pFigures[i1]->possibleMovesCurrently[j1].y());
+                                                        for(int q = 0;q<m_amountFigures;q++)if(q!=i1)if(m_pFigures[i1]->possibleMovesCurrently[j1].x() == m_pFigures[q]->getPosX() && m_pFigures[i1]->possibleMovesCurrently[j1].y() == m_pFigures[q]->getPosY())
+                                                        {
+                                                            aiValue += m_pFigures[q]->getValue();
+                                                            m_pFigures[q]->isThere = false;
+                                                            m_pFigures[q]->firstMove = true;
+                                                        }
+                                                        refreshCurrentlyPossibleMoves();
+                                                        m_pFigures[i2]->setPos(m_pFigures[i2]->possibleMovesCurrently[j2].x(),m_pFigures[i2]->possibleMovesCurrently[j2].y());
+                                                        for(int q = 0;q<m_amountFigures;q++)if(q!=i2)if(m_pFigures[i2]->possibleMovesCurrently[j2].x() == m_pFigures[q]->getPosX() && m_pFigures[i2]->possibleMovesCurrently[j2].y() == m_pFigures[q]->getPosY()){
+                                                            aiValue += m_pFigures[q]->getValue();
+                                                            m_pFigures[q]->isThere = false;
+                                                            m_pFigures[q]->firstMove = true;
+                                                        }
+                                                        //refreshCurrentlyPossibleMoves();
+                                                        //m_pFigures[i3]->setPos(m_pFigures[i3]->possibleMovesCurrently[j3].x(),m_pFigures[i3]->possibleMovesCurrently[j3].y());
+                                                        //for(int q = 0;q<m_amountFigures;q++)if(q!=i3)if(m_pFigures[i3]->possibleMovesCurrently[j3].x() == m_pFigures[q]->getPosX() && m_pFigures[i3]->possibleMovesCurrently[j3].y() == m_pFigures[q]->getPosY()){
+                                                        //    aiValue += m_pFigures[q]->getValue();
+                                                        //    m_pFigures[q]->isThere = false;
+                                                        //   m_pFigures[q]->firstMove = true;
+                                                        //}
+                                                        //refreshCurrentlyPossibleMoves();
+                                                        //m_pFigures[i4]->setPos(m_pFigures[i4]->possibleMovesCurrently[j4].x(),m_pFigures[i4]->possibleMovesCurrently[j4].y());
+                                                        //for(int q = 0;q<m_amountFigures;q++)if(q!=i4)if(m_pFigures[i4]->possibleMovesCurrently[j4].x() == m_pFigures[q]->getPosX() && m_pFigures[i4]->possibleMovesCurrently[j4].y() == m_pFigures[q]->getPosY()){
+                                                        //    aiValue += m_pFigures[q]->getValue();
+                                                        //    m_pFigures[q]->isThere = false;
+                                                        //m_pFigures[q]->firstMove = true;
+                                                        //}
+                                                        //refreshCurrentlyPossibleMoves();
+                                                        if(aiValue > highestAiValue){
+
+                                                            highestAiValue = aiValue;
+                                                            bestAiMoveFigure = i1;
+                                                            bestAiMove = m_pFigures[i1]->possibleMovesCurrently[j1];
+                                                        }
+
+
+                                                        //qDebug() << f;
+
+                                                    //}
+                                                //}
+                                            //}
+                                        //}
+                                    //}
+                                //}
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
+        for(int t = 0;t<m_amountFigures;t++){
+        m_pFigures[t] = m_pFiguresCopy[t];
+        }
+
+    m_pFigures[bestAiMoveFigure]->setPos(bestAiMove.x(),bestAiMove.y());
+    //qDebug() << m_pFigures[1]->getPosX() << m_pFigures[1]->getPosY();
+    //f++;
 
 
 }
+
+
+
+
+
 
 

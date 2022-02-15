@@ -73,6 +73,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(125);
        f.setY(-125);
        possibleMoves.append(f);
+
+       value = -900;
     }
     if(type == KING_W_1){
        QPixmap pm(125,125);
@@ -111,6 +113,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(-125);
        f.setY(125);
        possibleMoves.append(f);
+
+       value = 900;
     }
     if(type == PAWN_B_1){
        QPixmap pm(125,125);
@@ -133,6 +137,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_2){
        QPixmap pm(125,125);
@@ -156,6 +162,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_3){
        QPixmap pm(125,125);
@@ -179,6 +187,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_4){
        QPixmap pm(125,125);
@@ -202,6 +212,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_5){
        QPixmap pm(125,125);
@@ -225,6 +237,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_6){
        QPixmap pm(125,125);
@@ -248,6 +262,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_7){
        QPixmap pm(125,125);
@@ -271,6 +287,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_B_8){
        QPixmap pm(125,125);
@@ -294,6 +312,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(-250);
        possibleMoves.append(f);
+
+       value = -10;
     }
     if(type == PAWN_W_1){
        QPixmap pm(125,125);
@@ -316,6 +336,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_2){
        QPixmap pm(125,125);
@@ -340,6 +362,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setY(250);
        possibleMoves.append(f);
 
+       value = 10;
+
     }
     if(type == PAWN_W_3){
        QPixmap pm(125,125);
@@ -363,6 +387,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_4){
        QPixmap pm(125,125);
@@ -386,6 +412,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_5){
        QPixmap pm(125,125);
@@ -409,6 +437,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_6){
        QPixmap pm(125,125);
@@ -432,6 +462,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_7){
        QPixmap pm(125,125);
@@ -455,6 +487,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == PAWN_W_8){
        QPixmap pm(125,125);
@@ -478,6 +512,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(0);
        f.setY(250);
        possibleMoves.append(f);
+
+       value = 10;
     }
     if(type == KNIGHT_B_1){
        QPixmap pm(125,125);
@@ -518,6 +554,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(-250);
        f.setY(-125);
        possibleMoves.append(f);
+
+       value = -30;
     }
     if(type == KNIGHT_B_2){
        QPixmap pm(125,125);
@@ -557,6 +595,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(-250);
        f.setY(-125);
        possibleMoves.append(f);
+
+       value = -30;
     }
     if(type == KNIGHT_W_1){
        QPixmap pm(125,125);
@@ -595,6 +635,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(-250);
        f.setY(-125);
        possibleMoves.append(f);
+
+       value = 30;
     }
     if(type == KNIGHT_W_2){
        QPixmap pm(125,125);
@@ -633,6 +675,8 @@ void Figures::setType(FIGURE_NAMES type)
        f.setX(-250);
        f.setY(-125);
        possibleMoves.append(f);
+
+       value = 30;
     }
     if(type == BISHOP_B_1){
        QPixmap pm(125,125);
@@ -663,7 +707,7 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(125*i);
            possibleMoves.append(f);
        }
-
+       value = -30;
     }
     if(type == BISHOP_B_2){
        QPixmap pm(125,125);
@@ -694,6 +738,8 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(125*i);
            possibleMoves.append(f);
        }
+
+       value = -30;
     }
     if(type == BISHOP_W_1){
        QPixmap pm(125,125);
@@ -723,6 +769,8 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(125*i);
            possibleMoves.append(f);
        }
+
+       value = 30;
     }
     if(type == BISHOP_W_2){
        QPixmap pm(125,125);
@@ -752,6 +800,8 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(125*i);
            possibleMoves.append(f);
        }
+
+       value = 30;
     }
     if(type == ROOK_B_1){
        QPixmap pm(125,125);
@@ -782,6 +832,7 @@ void Figures::setType(FIGURE_NAMES type)
            possibleMoves.append(f);
            }
 
+       value = -50;
     }
     if(type == ROOK_B_2){
        QPixmap pm(125,125);
@@ -812,6 +863,8 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(0);
            possibleMoves.append(f);
            }
+
+       value = -50;
     }
     if(type == ROOK_W_1){
        QPixmap pm(125,125);
@@ -840,6 +893,7 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(0);
            possibleMoves.append(f);
            }
+       value = 50;
     }
     if(type == ROOK_W_2){
        QPixmap pm(125,125);
@@ -869,6 +923,7 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(0);
            possibleMoves.append(f);
            }
+       value = 50;
     }
     if(type == QUEEN_B_1){
        QPixmap pm(125,125);
@@ -918,7 +973,10 @@ void Figures::setType(FIGURE_NAMES type)
            f.setX(-125*i);
            f.setY(125*i);
            possibleMoves.append(f);
+
+
     }
+       value = -90;
     }
     if(type == QUEEN_W_1){
        QPixmap pm(125,125);
@@ -968,6 +1026,7 @@ void Figures::setType(FIGURE_NAMES type)
            f.setY(125*i);
            possibleMoves.append(f);
         }
+       value = 90;
      }
 
 
@@ -995,4 +1054,9 @@ bool Figures::getColor()
 int Figures::getType()
 {
     return type;
+}
+
+int Figures::getValue()
+{
+    return value;
 }
