@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
         m_pFigures[i]->firstMove = false;
     }
     depth = 3;
-    m_pFigures[29]->moveForward(5);
+    //m_pFigures[29]->moveForward(5);
 }
 
 MainWindow::~MainWindow()
@@ -226,8 +226,9 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 
     if(activeFigure != 999 && moved == true){
-        refreshCurrentlyPossibleMoves();
+
         getAiMove();
+        m_pFigures[bestAiMoveFigure]->setPos(bestAiMove.x(),bestAiMove.y());
     for(int i = 0;i<m_amountFigures;i++){
         if(i != bestAiMoveFigure){
             if(m_pFigures[i]->getPosX() == m_pFigures[bestAiMoveFigure]->getPosX() && m_pFigures[i]->getPosY() == m_pFigures[bestAiMoveFigure]->getPosY() && m_pFigures[i]->isThere == true){
@@ -1030,29 +1031,32 @@ void MainWindow::getAiMove()
     m_pFiguresCopy[t]->posBeforeMove = m_pFigures[t]->posBeforeMove;
 
     }
-    refreshCurrentlyPossibleMoves();
+
 
     bestAiMoveFigure = 0;
     int aiValue = 0;
     unsigned long f = 0;
+    int aiMoves = 0;
+    highestAiValue = -9999;
+    int capturedAtWhichAiMove = 0;
 
-    highestAiValue = -99999;
 
 
         for(int i1 = 0;i1<m_amountFigures;i1++){
-            if(i1 != 8){
+
             if(m_pFigures[i1]->getColor() == WHITE && m_pFigures[i1]->isThere == true){
+                refreshCurrentlyPossibleMoves();
                 for(int j1 = 0;j1<m_pFigures[i1]->possibleMovesCurrently.size();j1++){
 
-                    //for(int i2 = 0;i2<m_amountFigures;i2++){
-                      //  if(m_pFigures[i2]->getColor() == BLACK && m_pFigures[i2]->isThere == true){
+                    for(int i2 = 0;i2<m_amountFigures;i2++){
+                        if(m_pFigures[i2]->getColor() == BLACK && m_pFigures[i2]->isThere == true){
 
-                        //    for(int j2 = 0;j2<m_pFigures[i2]->possibleMovesCurrently.size();j2++){
+                            for(int j2 = 0;j2<m_pFigures[i2]->possibleMovesCurrently.size();j2++){
 
-                          //      for(int i3 = 0;i3<m_amountFigures;i3++){
-                            //        if(m_pFigures[i3]->getColor() == WHITE && m_pFigures[i3]->isThere == true){
+                                for(int i3 = 0;i3<m_amountFigures;i3++){
+                                  if(m_pFigures[i3]->getColor() == WHITE && m_pFigures[i3]->isThere == true){
 
-                              //          for(int j3 = 0;j3<m_pFigures[i3]->possibleMovesCurrently.size();j3++){
+                                        for(int j3 = 0;j3<m_pFigures[i3]->possibleMovesCurrently.size();j3++){
 
                                 //            for(int i4 = 0;i4<m_amountFigures;i4++){
                                              //   if(m_pFigures[i4]->getColor() == BLACK){
@@ -1066,18 +1070,22 @@ void MainWindow::getAiMove()
                                                             m_pFigures[t]->setPos(m_pFiguresCopy[t]->getPosX(),m_pFiguresCopy[t]->getPosY());
                                                             m_pFigures[t]->firstMove = m_pFiguresCopy[t]->firstMove;
                                                             m_pFigures[t]->isThere = m_pFiguresCopy[t]->isThere;
-                                                            m_pFigures[t]->posBeforeMove = m_pFiguresCopy[t]->posBeforeMove;
+                                                            m_pFigures[t]->posBeforeMove.setX(m_pFigures[t]->getPosX());
+                                                            m_pFigures[t]->posBeforeMove.setY(m_pFigures[t]->getPosY());
                                                         }
-
                                                         aiValue = 0;
+                                                        aiMoves = 0;
                                                         refreshCurrentlyPossibleMoves();
                                                         m_pFigures[i1]->setPos(m_pFigures[i1]->possibleMovesCurrently[j1].x(),m_pFigures[i1]->possibleMovesCurrently[j1].y());
-
+                                                        firstMove.setX(m_pFigures[i1]->possibleMovesCurrently[j1].x());
+                                                        firstMove.setY(m_pFigures[i1]->possibleMovesCurrently[j1].y());
+                                                        firstMoveFigure = i1;
                                                         //qDebug() << i1 << m_pFigures[i1]->possibleMovesCurrently[j1]/125;
                                                         //qDebug() << m_pFigures[i1]->getPosX()/125 << m_pFigures[i1]->getPosY()/125;
+                                                        aiMoves++;
                                                         for(int q = 0;q<m_amountFigures;q++)if(q!=i1)if(m_pFigures[i1]->getPosX() == m_pFigures[q]->getPosX() && m_pFigures[i1]->getPosY() == m_pFigures[q]->getPosY() && m_pFigures[q]->getColor() != m_pFigures[i1]->getColor() && m_pFigures[q]->isThere == true)
                                                         {
-                                                            //f++;
+                                                            f++;
                                                             //qDebug() << f;
                                                             aiValue += m_pFigures[q]->getValue();
                                                             //qDebug() << m_pFigures[q]->getValue();
@@ -1085,25 +1093,30 @@ void MainWindow::getAiMove()
                                                             m_pFigures[q]->firstMove = true;
                                                             //qDebug() << aiValue;
 
+                                                            capturedAtWhichAiMove = aiMoves;
                                                         }
-                                                        //refreshCurrentlyPossibleMoves();
-                                                        //m_pFigures[i2]->setPos(m_pFigures[i2]->possibleMovesCurrently[j2].x(),m_pFigures[i2]->possibleMovesCurrently[j2].y());
+                                                        aiMoves++;
+                                                        refreshCurrentlyPossibleMoves();
+                                                        m_pFigures[i2]->setPos(m_pFigures[i2]->possibleMovesCurrently[j2].x(),m_pFigures[i2]->possibleMovesCurrently[j2].y());
 
-                                                        //for(int f = 0;f<m_amountFigures;f++)if(f!=i2)if(m_pFigures[i2]->getPosX() == m_pFigures[f]->getPosX() && m_pFigures[i2]->getPosY() == m_pFigures[f]->getPosY() && m_pFigures[f]->getColor() != m_pFigures[i2]->getColor() && m_pFigures[f]->isThere == true){
-                                                        //    aiValue += m_pFigures[f]->getValue();
-                                                        //    m_pFigures[f]->isThere = false;
-                                                        //    m_pFigures[f]->firstMove = true;
-                                                        //}
-
+                                                        for(int f = 0;f<m_amountFigures;f++)if(f!=i2)if(m_pFigures[i2]->getPosX() == m_pFigures[f]->getPosX() && m_pFigures[i2]->getPosY() == m_pFigures[f]->getPosY() && m_pFigures[f]->getColor() != m_pFigures[i2]->getColor() && m_pFigures[f]->isThere == true){
+                                                            aiValue += m_pFigures[f]->getValue();
+                                                            m_pFigures[f]->isThere = false;
+                                                            m_pFigures[f]->firstMove = true;
+                                                            capturedAtWhichAiMove = aiMoves;
+                                                        }
+                                                        aiMoves++;
                                                         //qDebug() << m_pFigures[25]->possibleMovesCurrently.size();
-                                                        //refreshCurrentlyPossibleMoves();
-                                                        //m_pFigures[i3]->setPos(m_pFigures[i3]->possibleMovesCurrently[j3].x(),m_pFigures[i3]->possibleMovesCurrently[j3].y());
+                                                        refreshCurrentlyPossibleMoves();
+                                                        m_pFigures[i3]->setPos(m_pFigures[i3]->possibleMovesCurrently[j3].x(),m_pFigures[i3]->possibleMovesCurrently[j3].y());
 
-                                                        //for(int a = 0;a<m_amountFigures;a++)if(a!=i3)if(m_pFigures[i3]->getPosX() == m_pFigures[a]->getPosX() && m_pFigures[i3]->getPosY() == m_pFigures[a]->getPosY() && m_pFigures[a]->getColor() != m_pFigures[i3]->getColor() && m_pFigures[a]->isThere == true){
-                                                        //    aiValue += m_pFigures[a]->getValue();
-                                                        //    m_pFigures[a]->isThere = false;
-                                                        //   m_pFigures[a]->firstMove = true;
-                                                        //}
+                                                        for(int a = 0;a<m_amountFigures;a++)if(a!=i3)if(m_pFigures[i3]->getPosX() == m_pFigures[a]->getPosX() && m_pFigures[i3]->getPosY() == m_pFigures[a]->getPosY() && m_pFigures[a]->getColor() != m_pFigures[i3]->getColor() && m_pFigures[a]->isThere == true){
+                                                            aiValue += m_pFigures[a]->getValue();
+                                                            m_pFigures[a]->isThere = false;
+                                                            m_pFigures[a]->firstMove = true;
+                                                            capturedAtWhichAiMove = aiMoves;
+                                                        }
+
                                                         //refreshCurrentlyPossibleMoves();
                                                         //m_pFigures[i4]->setPos(m_pFigures[i4]->possibleMovesCurrently[j4].x(),m_pFigures[i4]->possibleMovesCurrently[j4].y());
                                                         //for(int q = 0;q<m_amountFigures;q++)if(q!=i4)if(m_pFigures[i4]->possibleMovesCurrently[j4].x() == m_pFigures[q]->getPosX() && m_pFigures[i4]->possibleMovesCurrently[j4].y() == m_pFigures[q]->getPosY()){
@@ -1112,38 +1125,49 @@ void MainWindow::getAiMove()
                                                         //m_pFigures[q]->firstMove = true;
                                                         //}
 
-
                                                         //if(i1 == 8)for(int f = 0;f<m_pFigures[i1]->possibleMovesCurrently.size();f++)qDebug()<<m_pFigures[i1]->possibleMovesCurrently[f]/125;
 
-                                                        for(int t = 0;t<m_amountFigures;t++){
+                                                        /*for(int t = 0;t<m_amountFigures;t++){
                                                             m_pFigures[t]->setPos(m_pFiguresCopy[t]->getPosX(),m_pFiguresCopy[t]->getPosY());
                                                             m_pFigures[t]->firstMove = m_pFiguresCopy[t]->firstMove;
                                                             m_pFigures[t]->isThere = m_pFiguresCopy[t]->isThere;
                                                             m_pFigures[t]->posBeforeMove = m_pFiguresCopy[t]->posBeforeMove;
-                                                            refreshCurrentlyPossibleMoves();
-                                                        }
 
+                                                        }*/
+                                                        //refreshCurrentlyPossibleMoves();
 
                                                         //qDebug() << aiValue;
                                                         if(aiValue > highestAiValue && m_pFigures[i1]->getColor() == WHITE){
                                                             highestAiValue = aiValue;
-                                                            bestAiMoveFigure = i1;
-                                                            bestAiMove = m_pFigures[i1]->possibleMovesCurrently[j1];
-                                                            qDebug() << "mem" << aiValue << m_pFigures[i1]->possibleMovesCurrently[j1] << bestAiMoveFigure;
+                                                            bestAiMoveFigure = firstMoveFigure;
+                                                            bestAiMove = firstMove;
+                                                            lowestAiMoves = capturedAtWhichAiMove;
+                                                            //qDebug() << "mem" << aiValue << m_pFigures[i1]->possibleMovesCurrently[j1] << bestAiMoveFigure;
+                                                            //qDebug() << i2 <<m_pFigures[i2]->possibleMovesCurrently[j2];
+
+                                                        }
+                                                        if(aiValue == highestAiValue && lowestAiMoves>capturedAtWhichAiMove && m_pFigures[i1]->getColor() == WHITE){
+                                                            highestAiValue = aiValue;
+                                                            bestAiMoveFigure = firstMoveFigure;
+                                                            bestAiMove = firstMove;
+                                                            //qDebug() << "mem" << aiValue << m_pFigures[i1]->possibleMovesCurrently[j1] << bestAiMoveFigure;
+                                                            //qDebug() << i2 <<m_pFigures[i2]->possibleMovesCurrently[j2];
+
                                                         }
 
-                                                        //qDebug() << f;
 
+                                                        //qDebug() << f;
+                                                        refreshCurrentlyPossibleMoves();
                                                     }
                                                }
-                                            }
 
-                                        //}
-                                    //}
-                                //}
-                            //}
-                        //}
-                    //}
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                 //}
             //}
@@ -1162,8 +1186,8 @@ void MainWindow::getAiMove()
 
 
     //qDebug() << bestAiMoveFigure << bestAiMove;
-    m_pFigures[bestAiMoveFigure]->setPos(bestAiMove.x(),bestAiMove.y());
-    refreshCurrentlyPossibleMoves();
+
+
     //qDebug() << m_pFigures[1]->getPosX() << m_pFigures[1]->getPosY();
     //f++;
 

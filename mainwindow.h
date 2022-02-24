@@ -65,8 +65,10 @@ private:
     int depth;
     int highestAiValue;
     int bestAiMoveFigure;
+    int lowestAiMoves;
     QPoint bestAiMove;
-
+    QPoint firstMove;
+    int firstMoveFigure;
 
 };
 #endif // MAINWINDOW_H
