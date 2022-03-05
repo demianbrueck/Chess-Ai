@@ -1,20 +1,20 @@
 <RCC>
-    <qresource prefix="/chessFigures">
-        <file>Chess_kdt45.svg</file>
-        <file>Chess_pdt45.svg</file>
-        <file>Chess_klt45.svg</file>
-        <file>Chess_plt45.svg</file>
-        <file>Chess_ndt45.svg</file>
-        <file>Chess_nlt45.svg</file>
-        <file>Chess_bdt45.svg</file>
-        <file>Chess_blt45.svg</file>
-        <file>Chess_rdt45.svg</file>
-        <file>Chess_rlt45.svg</file>
-        <file>Chess_qdt45.svg</file>
-        <file>Chess_qlt45.svg</file>
+    <qresource prefix="">
+        <file>res/img/Chess_kdt45.svg</file>
+        <file>res/img/Chess_pdt45.svg</file>
+        <file>res/img/Chess_klt45.svg</file>
+        <file>res/img/Chess_plt45.svg</file>
+        <file>res/img/Chess_ndt45.svg</file>
+        <file>res/img/Chess_nlt45.svg</file>
+        <file>res/img/Chess_bdt45.svg</file>
+        <file>res/img/Chess_blt45.svg</file>
+        <file>res/img/Chess_rdt45.svg</file>
+        <file>res/img/Chess_rlt45.svg</file>
+        <file>res/img/Chess_qdt45.svg</file>
+        <file>res/img/Chess_qlt45.svg</file>
     </qresource>
-    <qresource prefix="/sounds">
-        <file>capture.mp3</file>
-        <file>move.mp3</file>
+    <qresource prefix="">
+        <file>res/snd/capture.mp3</file>
+        <file>res/snd/move.mp3</file>
     </qresource>
 </RCC>

@@ -199,7 +199,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     for(int i = 0;i<m_amountFigures;i++){
         if(i != activeFigure){
             if(m_pFigures[i]->getPosX() == m_pFigures[activeFigure]->getPosX() && m_pFigures[i]->getPosY() == m_pFigures[activeFigure]->getPosY() && m_pFigures[i]->isThere == true){
-                musicPlayer->setMedia(QUrl("qrc:/sounds/capture.mp3"));
+                musicPlayer->setMedia(QUrl("qrc:/res/snd/capture.mp3"));
                 musicPlayer->play();
                 //qDebug() << "mem";
                 m_pFigures[i]->isThere = false;
@@ -212,7 +212,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
     if(m_pFigures[activeFigure]->posBeforeMove.x() != m_pFigures[activeFigure]->getPosX() || m_pFigures[activeFigure]->posBeforeMove.y() != m_pFigures[activeFigure]->getPosY()){
         if(captured == false){
-        musicPlayer->setMedia(QUrl("qrc:/sounds/move.mp3"));
+        musicPlayer->setMedia(QUrl("qrc:/res/snd/move.mp3"));
         musicPlayer->play();
         }
 
@@ -232,7 +232,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     for(int i = 0;i<m_amountFigures;i++){
         if(i != bestAiMoveFigure){
             if(m_pFigures[i]->getPosX() == m_pFigures[bestAiMoveFigure]->getPosX() && m_pFigures[i]->getPosY() == m_pFigures[bestAiMoveFigure]->getPosY() && m_pFigures[i]->isThere == true){
-                musicPlayer->setMedia(QUrl("qrc:/sounds/capture.mp3"));
+                musicPlayer->setMedia(QUrl("qrc:/res/snd/capture.mp3"));
                 musicPlayer->play();
                 //qDebug() << "mem";
                 m_pFigures[i]->isThere = false;
@@ -245,7 +245,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
     if(m_pFigures[bestAiMoveFigure]->posBeforeMove.x() != m_pFigures[bestAiMoveFigure]->getPosX() || m_pFigures[bestAiMoveFigure]->posBeforeMove.y() != m_pFigures[bestAiMoveFigure]->getPosY()){
         if(captured == false){
-        musicPlayer->setMedia(QUrl("qrc:/sounds/move.mp3"));
+        musicPlayer->setMedia(QUrl("qrc:/res/snd/move.mp3"));
         musicPlayer->play();
         }
 
@@ -1142,6 +1142,7 @@ void MainWindow::getAiMove()
                                                             bestAiMoveFigure = firstMoveFigure;
                                                             bestAiMove = firstMove;
                                                             lowestAiMoves = capturedAtWhichAiMove;
+                                                            m_pFigures[bestAiMoveFigure]->firstMove = true;
                                                             //qDebug() << "mem" << aiValue << m_pFigures[i1]->possibleMovesCurrently[j1] << bestAiMoveFigure;
                                                             //qDebug() << i2 <<m_pFigures[i2]->possibleMovesCurrently[j2];
 
@@ -1150,6 +1151,7 @@ void MainWindow::getAiMove()
                                                             highestAiValue = aiValue;
                                                             bestAiMoveFigure = firstMoveFigure;
                                                             bestAiMove = firstMove;
+                                                            m_pFigures[bestAiMoveFigure]->firstMove = true;
                                                             //qDebug() << "mem" << aiValue << m_pFigures[i1]->possibleMovesCurrently[j1] << bestAiMoveFigure;
                                                             //qDebug() << i2 <<m_pFigures[i2]->possibleMovesCurrently[j2];
 
@@ -1157,7 +1159,6 @@ void MainWindow::getAiMove()
 
 
                                                         //qDebug() << f;
-                                                        refreshCurrentlyPossibleMoves();
                                                     }
                                                }
 
