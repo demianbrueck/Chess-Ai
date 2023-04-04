@@ -7,7 +7,7 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPoint>
-#include <vector>
+#include <QVector>
 #include <string.h>
 #include <QDebug>
 #include <QWheelEvent>
@@ -17,13 +17,17 @@
 #include "figures.h"
 #include <QMediaPlayer>
 #include <QSound>
+#include <QObject>
 
+#define AMOUNT_FIGURES 32
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 1000
 #define BLOCK_WIDTH 125
 #define BLOCK_HEIGHT 125
 #define BLACK true
 #define WHITE false
+#define NONE 999
+#define AI_DEPTH 3
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,7 +40,26 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void refreshCurrentlyPossibleMoves(bool color);
 
+    enum{
+      WHITE_PIECES,
+      BLACK_PIECES
+    };
+
+    struct Move
+    {
+        QPoint point;
+        int figureIndex;
+    };
+
+    QVector<Move> allCurrentlyPossibleMoves;
+    int bestAiMoveFigure;
+    QPoint bestAiMove;
+
+
+signals:
+    void sigGetAiMove(QVector<Figures*> pFigures,int depth);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -45,30 +68,25 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 public slots:
     void sysTickTimer();
+    void slotAiMoveReady();
 private:
     Ui::MainWindow *ui;
     QTimer * m_pSysTickTimer;
     float chessFieldWidth;
     float chessFieldHeight;
     bool blackFieldColor;
-    Figures * m_pFigures[32];
-    Figures * m_pFiguresCopy[32];
+    QVector<Figures*> m_pFigures;
+    QVector<Figures*> m_pFiguresCopy;
     int m_amountFigures;
     QPoint getField(float,float);
     int getFigureOnPos(float,float);
     int activeFigure;
     QMediaPlayer * musicPlayer;
     bool captured;
-    void refreshCurrentlyPossibleMoves();
     bool colorTurn;
     void getAiMove();
-    int depth;
-    int highestAiValue;
-    int bestAiMoveFigure;
     int lowestAiMoves;
-    QPoint bestAiMove;
-    QPoint firstMove;
-    int firstMoveFigure;
+    bool generatingAiMove;
 
 };
 #endif // MAINWINDOW_H

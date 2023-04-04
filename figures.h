@@ -5,22 +5,6 @@
 #include <QPixmap>
 #include <vector>
 
-/*#define BISHOP_W 1
-#define BISHOP_B 2
-#define KNIGHT_W 3
-#define KNIGHT_B 4
-#define ROOK_W 5
-#define ROOK_B 6
-#define PAWN_W 7
-#define PAWN_B 8
-#define QUEEN_W 9
-#define QUEEN_B 10
-#define KING_W 11
-#define KING_B 12 */
-
-
-
-
 class Figures
 {
 public:

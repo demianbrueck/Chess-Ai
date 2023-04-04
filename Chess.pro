@@ -11,9 +11,11 @@ CONFIG += c++11
 SOURCES += \
     figures.cpp \
     main.cpp \
+    chessai.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    chessai.h \
     figures.h \
     mainwindow.h
 
