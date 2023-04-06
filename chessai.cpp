@@ -28,13 +28,14 @@ void ChessAi::run()
 
 
     for(int t = 0;t<AMOUNT_FIGURES;t++){
-        m_figuresCopy[t].setPos(m_pFigures[t]->getPosX(),m_figuresCopy[t].getPosY());
+        m_figuresCopy[t].setPos(m_pFigures[t]->getPosX(),m_pFigures[t]->getPosY());
         m_figuresCopy[t].firstMove = m_pFigures[t]->firstMove;
         m_figuresCopy[t].isThere = m_pFigures[t]->isThere;
         m_figuresCopy[t].posBeforeMove = m_pFigures[t]->posBeforeMove;
     }
 
     m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
+    m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
 
     for(int i=0;i<m_pMainWindow->allCurrentlyPossibleMoves.size();i++){
         if(m_pFigures[m_pMainWindow->allCurrentlyPossibleMoves[i].figureIndex]->getColor() == BLACK){
@@ -46,7 +47,7 @@ void ChessAi::run()
 
     for(int f=0;f<initalPossibleAiMoves.size();f++){
 
-        aiValue = -9999;
+        aiValue = 0;
 
         for(int t = 0;t<AMOUNT_FIGURES;t++){
             m_pFigures[t]->setPos(m_figuresCopy[t].getPosX(),m_figuresCopy[t].getPosY());
@@ -55,6 +56,7 @@ void ChessAi::run()
             m_pFigures[t]->posBeforeMove = m_figuresCopy[t].posBeforeMove;
 
         }
+        move = initalPossibleAiMoves[f];
 
         m_pFigures[move.figureIndex]->setPos(move.point.x(),move.point.y());
 
@@ -64,6 +66,7 @@ void ChessAi::run()
                     aiValue += m_pFigures[q]->getValue();
                     m_pFigures[q]->isThere = false;
                     m_pFigures[q]->firstMove = true;
+
                     //qDebug() << aiValue;
                     //capturedAtWhichAiMove = aiMoves;
                 }
@@ -74,6 +77,7 @@ void ChessAi::run()
 
             if(d!=0){
                 m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
+                m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
 
                 for(int m=0;m<m_pMainWindow->allCurrentlyPossibleMoves.size();m++){
                     move = m_pMainWindow->allCurrentlyPossibleMoves[m];
@@ -90,6 +94,10 @@ void ChessAi::run()
                                     aiValue += m_pFigures[q]->getValue();
                                     m_pFigures[q]->isThere = false;
                                     m_pFigures[q]->firstMove = true;
+                                    if(DEBUG_MODE){
+                                        if(!m_pMainWindow->paintingActive()) m_pMainWindow->repaint();
+                                    }
+
                                     //qDebug() << aiValue;
                                     //capturedAtWhichAiMove = aiMoves;
                                 }
@@ -98,6 +106,7 @@ void ChessAi::run()
                     }
                 }
                 m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
+                m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
             }
 
             for(int n=0;n<m_pMainWindow->allCurrentlyPossibleMoves.size();n++){
@@ -112,6 +121,9 @@ void ChessAi::run()
                                 aiValue += m_pFigures[q]->getValue();
                                 m_pFigures[q]->isThere = false;
                                 m_pFigures[q]->firstMove = true;
+                                if(DEBUG_MODE){
+                                    if(!m_pMainWindow->paintingActive()) m_pMainWindow->repaint();
+                                }
                                 //qDebug() << aiValue;
                                 //capturedAtWhichAiMove = aiMoves;
                             }
@@ -122,7 +134,6 @@ void ChessAi::run()
 
 
         }
-        //qDebug() << aiValue;
         if(aiValue > highestAiValue && m_pFigures[initalPossibleAiMoves[f].figureIndex]->getColor() == BLACK){
             highestAiValue = aiValue;
             m_pMainWindow->bestAiMoveFigure = initalPossibleAiMoves[f].figureIndex;
@@ -131,14 +142,16 @@ void ChessAi::run()
             //qDebug() << i2 <<m_pFigures[i2]->possibleMovesCurrently[j2];
 
         }
-        for(int t = 0;t<AMOUNT_FIGURES;t++){
-            m_pFigures[t]->setPos(m_figuresCopy[t].getPosX(),m_figuresCopy[t].getPosY());
-            m_pFigures[t]->firstMove = m_figuresCopy[t].firstMove;
-            m_pFigures[t]->isThere = m_figuresCopy[t].isThere;
-            m_pFigures[t]->posBeforeMove = m_figuresCopy[t].posBeforeMove;
-        }
 
     }
+
+    for(int t = 0;t<AMOUNT_FIGURES;t++){
+        m_pFigures[t]->setPos(m_figuresCopy[t].getPosX(),m_figuresCopy[t].getPosY());
+        m_pFigures[t]->firstMove = m_figuresCopy[t].firstMove;
+        m_pFigures[t]->isThere = m_figuresCopy[t].isThere;
+        m_pFigures[t]->posBeforeMove = m_figuresCopy[t].posBeforeMove;
+    }
+
     emit sigAiMoveReady();
 }
 

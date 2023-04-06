@@ -2,6 +2,7 @@
 #include <chessai.h>
 #include <figures.h>
 #include <QObject>
+#include <QVector>
 
 #include <QApplication>
 

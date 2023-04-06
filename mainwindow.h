@@ -27,7 +27,8 @@
 #define BLACK true
 #define WHITE false
 #define NONE 999
-#define AI_DEPTH 3
+#define AI_DEPTH 8
+#define DEBUG_MODE true
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,11 +42,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void refreshCurrentlyPossibleMoves(bool color);
-
-    enum{
-      WHITE_PIECES,
-      BLACK_PIECES
-    };
 
     struct Move
     {

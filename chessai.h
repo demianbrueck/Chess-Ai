@@ -9,6 +9,7 @@
 
 #define AMOUNT_FIGURES 32
 
+
 class ChessAi : public QThread
 {
     Q_OBJECT

@@ -104,7 +104,6 @@ void MainWindow::paintEvent(QPaintEvent *event)
         }
     }
 
-
     painter.end();
 
 }
@@ -127,8 +126,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         int figureOnPos;
         figureOnPos = getFigureOnPos(event->x(),event->y());
 
-        //if()
-
         if(figureOnPos != NONE){
             //if(m_pFigures[figureOnPos]->getColor() == BLACK){
             if(m_pFigures[figureOnPos]->isThere == true)activeFigure = figureOnPos;
@@ -146,6 +143,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         //if(activeFigure !=NONE) qDebug() << activeFigure;
         update();
     }
+
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -158,13 +156,14 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
         //qDebug() << event->y();
         bool moved = false;
         QPoint f = getField(event->x(),event->y());
-        qDebug() << "before:" << m_pFigures[activeFigure]->getPosX() << m_pFigures[activeFigure]->getPosY();
-        m_pFigures[activeFigure]->setPos(f.x(),f.y());
-        qDebug() << "after:" << m_pFigures[activeFigure]->getPosX() << m_pFigures[activeFigure]->getPosY();
-        repaint();
+
         refreshCurrentlyPossibleMoves(WHITE);
         refreshCurrentlyPossibleMoves(BLACK);
         if(activeFigure != NONE){
+            qDebug() << "before:" << m_pFigures[activeFigure]->getPosX() << m_pFigures[activeFigure]->getPosY();
+            m_pFigures[activeFigure]->setPos(f.x(),f.y());
+            qDebug() << "after:" << m_pFigures[activeFigure]->getPosX() << m_pFigures[activeFigure]->getPosY();
+            repaint();
 
             if(event->x() > 0 && event->y() > 0 && event->x() < WINDOW_WIDTH && event->y() < WINDOW_HEIGHT ){
                 //qDebug() << "normal";
@@ -199,9 +198,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
             else m_pFigures[activeFigure]->setPos(m_pFigures[activeFigure]->posBeforeMove.x(),m_pFigures[activeFigure]->posBeforeMove.y());
 
-
-
-
             //Disables the Figure on Field if antoher Figure gets on it
 
             for(int i = 0;i<AMOUNT_FIGURES;i++){
@@ -217,6 +213,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
             }
 
+
             if(m_pFigures[activeFigure]->posBeforeMove.x() != m_pFigures[activeFigure]->getPosX() || m_pFigures[activeFigure]->posBeforeMove.y() != m_pFigures[activeFigure]->getPosY()){
                 if(captured == false){
                     musicPlayer->setMedia(QUrl("qrc:/res/snd/move.mp3"));
@@ -224,19 +221,22 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 }
 
             }
-
-            if(moved == true){
-                generatingAiMove = true;
-                getAiMove();
-
-            }
-            if(m_pFigures[activeFigure]->isMoving == false) activeFigure = NONE;
         }
         //activeFigure = NONE;
 
+
+        if(activeFigure != NONE && moved == true){
+
+            generatingAiMove = true;
+            getAiMove();
+
+        }
+
+        if(activeFigure != NONE && m_pFigures[activeFigure]->isMoving == false) activeFigure = NONE;
+
         //qDebug() << m_pFigures[19]->possibleMovesCurrently.size();
 
-        //update();
+        update();
     }
 }
 
@@ -269,8 +269,9 @@ void MainWindow::sysTickTimer()
 
 void MainWindow::slotAiMoveReady()
 {
-
+    qDebug() << "bestAiMove:" << bestAiMove << "  bestAiMoveFigure:" << bestAiMoveFigure;
     m_pFigures[bestAiMoveFigure]->setPos(bestAiMove.x(),bestAiMove.y());
+    m_pFigures[bestAiMoveFigure]->firstMove = true;
     for(int i = 0;i<AMOUNT_FIGURES;i++){
         if(i != bestAiMoveFigure){
             if(m_pFigures[i]->getPosX() == m_pFigures[bestAiMoveFigure]->getPosX() && m_pFigures[i]->getPosY() == m_pFigures[bestAiMoveFigure]->getPosY() && m_pFigures[i]->isThere == true){
@@ -281,7 +282,6 @@ void MainWindow::slotAiMoveReady()
                 captured = true;
             }
         }
-
     }
 
 
@@ -291,9 +291,8 @@ void MainWindow::slotAiMoveReady()
             musicPlayer->play();
         }
     }
-    update();
     generatingAiMove = false;
-
+    this->setUpdatesEnabled(true);
 }
 
 QPoint MainWindow::getField(float mouse_xPos, float mouse_yPos)
@@ -338,19 +337,16 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
     QPoint f;
     Move move;
 
-    allCurrentlyPossibleMoves.clear();
+    for(int a=0;a<allCurrentlyPossibleMoves.size();a++){
+        if(m_pFigures[allCurrentlyPossibleMoves[a].figureIndex]->getColor() == color) allCurrentlyPossibleMoves.remove(a);
+    }
 
     //qDebug() << AMOUNT_FIGURES;
     for(int i = 0;i<AMOUNT_FIGURES;i++){
         //qDebug() << m_pFigures[i]->getType();
-        if(color == BLACK_PIECES){
-            if(m_pFigures[i]->getColor() == BLACK) m_pFigures[i]->possibleMovesCurrently.clear();
+        if(m_pFigures[i]->getColor() == color){
+            m_pFigures[i]->possibleMovesCurrently.clear();
         }
-        else{
-            if(m_pFigures[i]->getColor() == WHITE) m_pFigures[i]->possibleMovesCurrently.clear();
-        }
-
-
 
         //move rules for knights
         if(m_pFigures[i]->getType() >= 20 && m_pFigures[i]->getType() < 24 && m_pFigures[i]->getColor() == color){
@@ -360,7 +356,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                     bool figureInfront = false;
                     for(int g = 0;g<AMOUNT_FIGURES;g++){
                         if(g!=i)if(m_pFigures[g]->getPosX() == m_pFigures[i]->possibleMoves[j].x() + m_pFigures[i]->posBeforeMove.x() && m_pFigures[g]->getPosY() == m_pFigures[i]->possibleMoves[j].y() + m_pFigures[i]->posBeforeMove.y() && m_pFigures[g]->getColor() == m_pFigures[i]->getColor() && m_pFigures[g]->isThere == true){
-
                             figureInfront = true;
                         }
                     }
@@ -1214,13 +1209,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
         }
 
     }
-
+    qDebug() << allCurrentlyPossibleMoves.size();
 }
 
 
 void MainWindow::getAiMove()
 {
-    generatingAiMove = false;
-    //emit sigGetAiMove(m_pFigures,AI_DEPTH);
-
+    if(!DEBUG_MODE)this->setUpdatesEnabled(false);
+    emit sigGetAiMove(m_pFigures,AI_DEPTH);
 }

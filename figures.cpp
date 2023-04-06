@@ -811,7 +811,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_rlt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
-       color = BLACK;
+       color = WHITE;
 
        QPoint f;
        for(int i = 1;i<8;i++){
