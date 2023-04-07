@@ -43,6 +43,7 @@ void Figures::setType(FIGURE_NAMES type)
        QPixmap pm(125,125);
        pm.load(":/res/img/Chess_klt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
+       name = "KING_W_1";
        moveBack(7);
        moveRight(3);
        color = WHITE;
@@ -84,6 +85,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_kdt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(3);
+       name = "KING_B_1";
        color = BLACK;
 
        QPoint f(0,-125);
@@ -125,6 +127,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        color = WHITE;
+       name = "PAWN_W_1";
 
        QPoint f(0,-125);
        possibleMoves.append(f);
@@ -149,6 +152,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(1);
+       name = "PAWN_W_2";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -174,6 +178,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(2);
+       name = "PAWN_W_3";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -199,6 +204,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(3);
+       name = "PAWN_W_4";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -224,6 +230,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(4);
+       name = "PAWN_W_5";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -249,6 +256,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(5);
+       name = "PAWN_W_6";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -274,6 +282,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(6);
+       name = "PAWN_W_7";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -299,6 +308,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(6);
        moveRight(7);
+       name = "PAWN_W_8";
        color = WHITE;
 
        QPoint f(0,-125);
@@ -323,6 +333,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_pdt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
+       name = "PAWN_B_1";
        color = BLACK;
 
        QPoint f(0,125);
@@ -348,6 +359,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(1);
+       name = "PAWN_B_2";
        color = BLACK;
 
        QPoint f(0,125);
@@ -374,6 +386,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(2);
+       name = "PAWN_B_3";
        color = BLACK;
 
        QPoint f(0,125);
@@ -399,6 +412,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(3);
+       name = "PAWN_B_4";
        color = BLACK;
 
        QPoint f(0,125);
@@ -424,6 +438,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(4);
+       name = "PAWN_B_5";
        color = BLACK;
 
        QPoint f(0,125);
@@ -449,6 +464,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(5);
+       name = "PAWN_B_6";
        color = BLACK;
 
        QPoint f(0,125);
@@ -474,6 +490,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(6);
+       name = "PAWN_B_7";
        color = BLACK;
 
        QPoint f(0,125);
@@ -499,6 +516,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(1);
        moveRight(7);
+       name = "PAWN_B_8";
        color = BLACK;
 
        QPoint f(0,125);
@@ -524,6 +542,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
        moveRight(1);
+       name = "KNIGHT_W_1";
        color = WHITE;
 
        QPoint f(125,250);
@@ -566,6 +585,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
        moveRight(6);
+       name = "KNIGHT_W_2";
        color = WHITE;
 
        QPoint f(125,250);
@@ -606,6 +626,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_ndt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(1);
+       name = "KNIGHT_B_1";
        color = BLACK;
 
        QPoint f(125,250);
@@ -646,6 +667,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_ndt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(6);
+       name = "KNIGHT_B_2";
        color = BLACK;
 
        QPoint f(125,250);
@@ -687,6 +709,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
        moveRight(2);
+       name = "BISHOP_W_1";
        color = WHITE;
 
        QPoint f;
@@ -718,6 +741,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
        moveRight(5);
+       name = "BISHOP_W_2";
        color = WHITE;
 
        QPoint f;
@@ -749,6 +773,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_bdt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(2);
+       name = "BISHOP_B_1";
        color = BLACK;
 
        QPoint f;
@@ -780,6 +805,8 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_bdt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(5);
+       name = "BISHOP_B_2";
+
        color = BLACK;
 
        QPoint f;
@@ -811,6 +838,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_rlt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
+       name = "ROOK_W_1";
        color = WHITE;
 
        QPoint f;
@@ -843,6 +871,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveBack(7);
        moveRight(7);
+       name = "ROOK_W_2";
        color = WHITE;
 
        QPoint f;
@@ -874,6 +903,7 @@ void Figures::setType(FIGURE_NAMES type)
        pm.load(":/res/img/Chess_rdt45.svg");
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        color = BLACK;
+       name = "ROOK_B_1";
 
        QPoint f;
        for(int i = 1;i<8;i++){
@@ -904,6 +934,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(7);
        color = BLACK;
+       name = "ROOK_B_2";
 
        QPoint f;
        for(int i = 1;i<8;i++){
@@ -934,6 +965,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(4);
        moveBack(7);
+       name = "QUEEN_W_1";
        color = WHITE;
 
        QPoint f;
@@ -985,6 +1017,7 @@ void Figures::setType(FIGURE_NAMES type)
        m_Picture = pm.scaled(BLOCK_WIDTH,BLOCK_HEIGHT);
        moveRight(4);
        color = BLACK;
+       name = "QUEEN_B_1";
 
        QPoint f;
        for(int i = 1;i<8;i++){
@@ -1045,6 +1078,11 @@ int Figures::getPosX()
 int Figures::getPosY()
 {
     return posY;
+}
+
+QString Figures::getName()
+{
+    return name;
 }
 
 bool Figures::getColor()

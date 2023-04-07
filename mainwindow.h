@@ -28,7 +28,7 @@
 #define WHITE false
 #define NONE 999
 #define AI_DEPTH 8
-#define DEBUG_MODE true
+#define DEBUG_MODE false
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,14 +42,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void refreshCurrentlyPossibleMoves(bool color);
-
-    struct Move
-    {
-        QPoint point;
-        int figureIndex;
-    };
-
-    QVector<Move> allCurrentlyPossibleMoves;
     int bestAiMoveFigure;
     QPoint bestAiMove;
 

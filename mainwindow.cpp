@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
         //m_pFiguresCopy[f].append(figure);
 
     }
+    generatingAiMove = false;
     m_pSysTickTimer = new QTimer(this);
 
     connect(m_pSysTickTimer, &QTimer::timeout, this, &MainWindow::sysTickTimer);
@@ -335,11 +336,6 @@ int MainWindow::getFigureOnPos(float pos_x, float pos_y)
 void MainWindow::refreshCurrentlyPossibleMoves(bool color)
 {
     QPoint f;
-    Move move;
-
-    for(int a=0;a<allCurrentlyPossibleMoves.size();a++){
-        if(m_pFigures[allCurrentlyPossibleMoves[a].figureIndex]->getColor() == color) allCurrentlyPossibleMoves.remove(a);
-    }
 
     //qDebug() << AMOUNT_FIGURES;
     for(int i = 0;i<AMOUNT_FIGURES;i++){
@@ -365,10 +361,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                     }
                 }
             }
@@ -388,10 +380,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == -125){
@@ -405,9 +393,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == 250 && m_pFigures[i]->firstMove == false){
@@ -420,10 +405,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     if(m_pFigures[i]->possibleMoves[j].x() == 0 && m_pFigures[i]->possibleMoves[j].y() == -250 && m_pFigures[i]->firstMove == false){
@@ -437,10 +418,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
 
@@ -455,10 +432,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     if(m_pFigures[i]->possibleMoves[j].x() == -125 && m_pFigures[i]->possibleMoves[j].y() == 125){
@@ -472,10 +445,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
 
@@ -489,10 +458,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     if(m_pFigures[i]->possibleMoves[j].x() == -125 && m_pFigures[i]->possibleMoves[j].y() == -125){
@@ -506,10 +471,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                     //qDebug() << "memerfef";
@@ -551,10 +512,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                             f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                             f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                             m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                            move.point = f;
-                            move.figureIndex = i;
-                            allCurrentlyPossibleMoves.append(move);
                         }
                     }
                 }
@@ -584,10 +541,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 7;
                     }
                     else{
@@ -595,9 +548,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -624,21 +574,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 14;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-                        //qDebug()<<"mem";
 
                     }
                 }
@@ -664,10 +605,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 21;
                     }
                     else{
@@ -675,9 +612,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -704,20 +638,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 28;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -747,20 +673,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 7;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -787,20 +705,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 14;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -826,9 +736,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         j = 21;
                     }
@@ -836,10 +743,6 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -866,20 +769,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 28;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         //qDebug()<<"mem";
 
@@ -912,20 +807,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 7;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         //qDebug()<<"mem";
 
@@ -953,20 +840,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 14;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         //qDebug()<<"mem";
 
@@ -994,20 +873,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 21;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         //qDebug()<<"mem";
 
@@ -1035,20 +906,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 28;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                         //qDebug()<<"mem";
 
@@ -1075,20 +938,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 35;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                         //qDebug()<<"mem";
 
                     }
@@ -1113,20 +968,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 42;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
                     }
                 }
             }
@@ -1149,20 +996,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 49;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                     }
                 }
@@ -1187,20 +1026,12 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
 
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
-
                         j = 56;
                     }
                     else{
                         f.setX(m_pFigures[i]->posBeforeMove.x()+m_pFigures[i]->possibleMoves[j].x());
                         f.setY(m_pFigures[i]->posBeforeMove.y()+m_pFigures[i]->possibleMoves[j].y());
                         m_pFigures[i]->possibleMovesCurrently.append(f);
-
-                        move.point = f;
-                        move.figureIndex = i;
-                        allCurrentlyPossibleMoves.append(move);
 
                     }
                 }
@@ -1209,7 +1040,7 @@ void MainWindow::refreshCurrentlyPossibleMoves(bool color)
         }
 
     }
-    qDebug() << allCurrentlyPossibleMoves.size();
+    //qDebug() << allCurrentlyPossibleMoves.size();
 }
 
 

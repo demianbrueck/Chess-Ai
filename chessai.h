@@ -22,6 +22,11 @@ signals:
 public slots:
     void slotGetAiMove(QVector<Figures*> pFigures,int depth);
 private:
+    struct Move
+    {
+        QPoint point;
+        int figureIndex;
+    };
     QVector<Figures*> m_pFigures;
     QVector<Figures> m_figuresCopy;
     int m_aiDepth;
@@ -30,8 +35,9 @@ private:
     int aiMoves;
     int highestAiValue;
     int capturedAtWhichAiMove;
-    QVector<MainWindow::Move> initalPossibleAiMoves;
-    MainWindow::Move move;
+    QVector<Move> initalPossibleAiMoves;
+    Move move;
+    QVector<Move> allCurrentlyPossibleMoves;
 };
 
 #endif // CHESSAI_H

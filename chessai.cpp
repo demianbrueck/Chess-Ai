@@ -24,24 +24,32 @@ void ChessAi::run()
     aiMoves = 0;
     highestAiValue = -9999;
     capturedAtWhichAiMove = 0;
-    MainWindow::Move move;
+    Move move;
 
+    m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
+    m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
+    allCurrentlyPossibleMoves.clear();
 
     for(int t = 0;t<AMOUNT_FIGURES;t++){
         m_figuresCopy[t].setPos(m_pFigures[t]->getPosX(),m_pFigures[t]->getPosY());
         m_figuresCopy[t].firstMove = m_pFigures[t]->firstMove;
         m_figuresCopy[t].isThere = m_pFigures[t]->isThere;
         m_figuresCopy[t].posBeforeMove = m_pFigures[t]->posBeforeMove;
+        for(int p=0;p<m_pFigures[t]->possibleMovesCurrently.size();p++){
+            Move move;
+            move.point.setX(m_pFigures[t]->possibleMovesCurrently[p].x());
+            move.point.setY(m_pFigures[t]->possibleMovesCurrently[p].y());
+            move.figureIndex = t;
+            allCurrentlyPossibleMoves.append(move);
+        }
     }
 
-    m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
-    m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
-
-    for(int i=0;i<m_pMainWindow->allCurrentlyPossibleMoves.size();i++){
-        if(m_pFigures[m_pMainWindow->allCurrentlyPossibleMoves[i].figureIndex]->getColor() == BLACK){
-            move.figureIndex = m_pMainWindow->allCurrentlyPossibleMoves[i].figureIndex;
-            move.point = m_pMainWindow->allCurrentlyPossibleMoves[i].point;
+    for(int i=0;i<allCurrentlyPossibleMoves.size();i++){
+        if(m_pFigures[allCurrentlyPossibleMoves[i].figureIndex]->getColor() == BLACK){
+            move.figureIndex = allCurrentlyPossibleMoves[i].figureIndex;
+            move.point = allCurrentlyPossibleMoves[i].point;
             initalPossibleAiMoves.append(move);
+            qDebug() << "possible move ; figure:" << m_pFigures[allCurrentlyPossibleMoves[i].figureIndex]->getName() << allCurrentlyPossibleMoves[i].point.x() << allCurrentlyPossibleMoves[i].point.y();
         }
     }
 
@@ -79,8 +87,8 @@ void ChessAi::run()
                 m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
                 m_pMainWindow->refreshCurrentlyPossibleMoves(WHITE);
 
-                for(int m=0;m<m_pMainWindow->allCurrentlyPossibleMoves.size();m++){
-                    move = m_pMainWindow->allCurrentlyPossibleMoves[m];
+                for(int m=0;m<allCurrentlyPossibleMoves.size();m++){
+                    move = allCurrentlyPossibleMoves[m];
 
                     if(m_pFigures[move.figureIndex]->getColor() == BLACK){
 
@@ -109,10 +117,10 @@ void ChessAi::run()
                 m_pMainWindow->refreshCurrentlyPossibleMoves(BLACK);
             }
 
-            for(int n=0;n<m_pMainWindow->allCurrentlyPossibleMoves.size();n++){
-                move = m_pMainWindow->allCurrentlyPossibleMoves[n];
+            for(int n=0;n<allCurrentlyPossibleMoves.size();n++){
+                move = allCurrentlyPossibleMoves[n];
                 if(m_pFigures[move.figureIndex]->getColor() == WHITE){
-                    move = m_pMainWindow->allCurrentlyPossibleMoves[n];
+                    move = allCurrentlyPossibleMoves[n];
                     m_pFigures[move.figureIndex]->setPos(move.point.x(),move.point.y());
                     for(int q = 0;q<AMOUNT_FIGURES;q++)
                     {

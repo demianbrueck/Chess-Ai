@@ -63,6 +63,7 @@ public:
     void setPos(int pos_x,int pos_y);
     int getPosX();
     int getPosY();
+    QString getName();
     QPixmap m_Picture;
     bool isThere;
     bool isMoving;
@@ -79,6 +80,7 @@ private:
     int posY;
     int type;
     int value;
+    QString name;
 };
 
 #endif // FIGURES_H
